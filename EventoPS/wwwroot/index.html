@@ -1,0 +1,41 @@
+﻿<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Eventos</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background: red;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bienvenido 🎬</h1>
+    <button class="btn" onclick="cargarEventos(soloReservados = false)">
+        Ingresar a las funciones
+    </button>
+
+    <button class="btn" onclick="cargarEventos2(soloReservados = true)">
+        Comprar asiento
+    </button>
+
+    <div id="contenedor"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

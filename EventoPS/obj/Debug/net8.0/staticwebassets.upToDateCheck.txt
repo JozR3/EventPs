@@ -1,0 +1,2 @@
+wwwroot\App.js
+wwwroot\index.html
