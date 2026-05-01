@@ -66,3 +66,7 @@ Para la ejecucion del programa se debe tener en cuenta que el perfil de lanzamie
 ## 📌 Consideraciones 
 Tenga en cuenta que el programa puede sufrir modificaciones futuras que cambien el aspecto del Front end y difieran del aspecto que tendra en la entrega 2. 
 No obstante, se informa que el primer repositorio subido contiene los puntos minimos para la primera entrega, pero ya se comenzo con los preparativos para la segunda entrega, por lo que puede que ciertas partes del codigo se encuentren "sin terminar" o "sin sentido" que ya corresponden a preliminares de funciones futuras.
+
+## Autores
+- Ruiz Jose
+- Tomas Bandiera
