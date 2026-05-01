@@ -62,6 +62,15 @@ Para la ejecucion del programa se debe tener en cuenta que el perfil de lanzamie
 <img width="727" height="543" alt="image" src="https://github.com/user-attachments/assets/3d4f4ba4-3cc0-4013-92cc-2ee3ac98713d" />
 
 ---
+---
+
+## 🤝 Aportes 
+Para el proyecto, las tareas fueron divididas de la siguiente manera:
+Tomas Bandiera:
+Frontend: Codigo HTML y javascript, e implementacion del boton "Ingresar a las funciones". 
+Backend:Endpoint GET: Listado paginado del catalogo de eventos.
+
+---
 
 ## 📌 Consideraciones 
 Tenga en cuenta que el programa puede sufrir modificaciones futuras que cambien el aspecto del Front end y difieran del aspecto que tendra en la entrega 2. 
