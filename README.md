@@ -65,10 +65,17 @@ Para la ejecucion del programa se debe tener en cuenta que el perfil de lanzamie
 ---
 
 ## 🤝 Aportes 
-Para el proyecto, las tareas fueron divididas de la siguiente manera:
-Tomas Bandiera:
+Para el proyecto, las tareas fueron divididas aproximadamente de la siguiente manera:
+
+**Tomas Bandiera:**
+
 Frontend: Codigo HTML y javascript, e implementacion del boton "Ingresar a las funciones". 
 Backend:Endpoint GET: Listado paginado del catalogo de eventos.
+
+ **Ruiz Jose:**
+ 
+Frontend: Creacion de la interfaz de eventos y las interconexiones con las API backend
+Backend: Creacion de Endpoint GET (Retorno de butacas) y Endpoint POST (Simulacion de reservas)
 
 ---
 
