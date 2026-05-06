@@ -28,6 +28,12 @@ namespace EventoPS.Service
             var user = await _context.Users.FindAsync(request.UserId);
             if (user == null)
                 return false;
+            // Buscar Reserva.
+            var reservation = await _context.Reservations
+                .FirstOrDefaultAsync(r => r.SeatId == request.SeatId && r.Status == "Pending");
+            if (reservation == null)
+                return false;
+
 
             var exists = await _context.Seats
                 .AnyAsync(r => r.Id == request.SeatId && (r.Status == "Available" || r.Status == "Paid"));
@@ -37,7 +43,9 @@ namespace EventoPS.Service
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                seat.Status = "Paid";
+                seat.Status = "Sold";
+
+                reservation.Status = "Paid";
 
                 _context.AuditLogs.Add(new Audit_Log
                 {

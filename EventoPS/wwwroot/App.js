@@ -36,7 +36,7 @@ async function verEvento(eventId, soloReservados) {
 
     try {
         const url = soloReservados
-            ? `/api/reservedseats/${eventId}`   // backend filtrado
+            ? `/api/events/${eventId}/reservedseats`   // backend filtrado
             : `/api/events/${eventId}/seats`;   // todos
 
         const res = await fetch(url);
@@ -71,7 +71,7 @@ function mostrarAsientos(sectores, eventId, modo) {
                     <div style="display:flex; gap:5px;">
                         ${f.asientos.map(seat => `
                             <div
-                                onclick='handleSeatClick(${JSON.stringify(seat)}, ${eventId}, "${modo}")'
+                                onclick='handleSeatClick(${JSON.stringify(seat)}, ${eventId}, ${modo})'
                                 style="
                                     width:40px;
                                     height:40px;
@@ -96,21 +96,78 @@ function mostrarAsientos(sectores, eventId, modo) {
         `;
     }).join("");
 }
-
 async function handleSeatClick(seat, eventId, modo) {
-    if (modo === "reserved") {
+    if (modo === true) {
         // BUY
         if (seat.status !== "Reserved") {
-            return alert("No disponible para comprar");
+            return alert("No está disponible para comprar");
         }
 
-        if (!confirm(`¿Comprar ${seat.rowIdentifier}-${seat.seatNumber}?`)) return;
+        try {
+            const confirmar = confirm(
+                `¿Comprar asiento ${seat.rowIdentifier}-${seat.seatNumber}?`
+            );
+            if (!confirmar) return;
 
-        return postAction("/api/checkouts", seat.id, "Compra exitosa 🎉", eventId);
+            const res = await fetch("/api/checkouts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: 1,
+                    seatId: seat.id
+                })
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                console.error(msg);
+                alert("Error: " + msg);
+                return;
+            }
+
+            alert("Compra exitosa 🎉");
+
+        } catch (error) {
+            console.error(error);
+            alert("Error de conexión");
+        }
     }
+    else if (modo === false){
+        try {
+            const confirmar = confirm(
+                `¿Reservar asiento ${seat.rowIdentifier}-${seat.seatNumber}?`
+            );
+            if (!confirmar) return;
 
-    // RESERVE
-    return postAction("/api/reservation", seat.id, "Reserva exitosa 🎉", eventId);
+            const res = await fetch("/api/reservation", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId: 1,
+                    seatId: seat.id
+                })
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                console.error(msg);
+                alert("Error: " + msg);
+                return;
+            }
+
+            alert("Reserva exitosa 🎉");
+
+        } catch (error) {
+            console.error(error);
+            alert("Error de conexión");
+        }
+    }
+    // 🔄 recargar asientos
+    verEvento(eventId, modo);
 }
 function agruparPorFilas(seats) {
     const filas = {};

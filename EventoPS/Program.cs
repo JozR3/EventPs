@@ -3,6 +3,7 @@ using Application.Interfaces;
 using EventoPS.Service;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using EventoPS.Service;
 
 namespace EventoPS
 {
@@ -37,6 +38,9 @@ namespace EventoPS
 
             builder.Services.AddScoped<IReservedSeatService, ReservedSeatService>();
             builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+
+            // Tarea cronometrada.
+            builder.Services.AddHostedService<ExpiredReservationCleanupService>();
             //
 
             var app = builder.Build();
@@ -49,10 +53,12 @@ namespace EventoPS
                 try
                 {
                     //context.Database.EnsureDeleted();
-                    context.Database.EnsureCreated();
-                    context.Database.Migrate();
+                    //context.Database.EnsureCreated();
+                    //context.Database.Migrate();
 
-                    
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
+
                 }
                 catch (Exception ex)
                 {
