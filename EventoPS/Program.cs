@@ -1,9 +1,7 @@
-
 using Application.Interfaces;
 using EventoPS.Service;
 using Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using EventoPS.Service;
 
 namespace EventoPS
 {
@@ -39,6 +37,8 @@ namespace EventoPS
             builder.Services.AddScoped<IReservedSeatService, ReservedSeatService>();
             builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 
+            // Endpoint Pagos.
+            builder.Services.AddScoped<IPagoService, PagoService>();
             // Tarea cronometrada.
             builder.Services.AddHostedService<ExpiredReservationCleanupService>();
             //

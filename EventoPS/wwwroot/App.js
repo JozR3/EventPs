@@ -109,7 +109,7 @@ async function handleSeatClick(seat, eventId, modo) {
             );
             if (!confirmar) return;
 
-            const res = await fetch("/api/checkouts", {
+            const res = await fetch("/api/pagos", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
