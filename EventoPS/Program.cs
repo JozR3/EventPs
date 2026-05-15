@@ -1,4 +1,3 @@
-
 using Application.Interfaces;
 using EventoPS.Service;
 using Infraestructure.Persistence;
@@ -37,6 +36,11 @@ namespace EventoPS
 
             builder.Services.AddScoped<IReservedSeatService, ReservedSeatService>();
             builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+
+            // Endpoint Pagos.
+            builder.Services.AddScoped<IPagoService, PagoService>();
+            // Tarea cronometrada.
+            builder.Services.AddHostedService<ExpiredReservationCleanupService>();
             //
 
             var app = builder.Build();
@@ -49,10 +53,12 @@ namespace EventoPS
                 try
                 {
                     //context.Database.EnsureDeleted();
-                    context.Database.EnsureCreated();
-                    context.Database.Migrate();
+                    //context.Database.EnsureCreated();
+                    //context.Database.Migrate();
 
-                    
+                    context.Database.EnsureDeleted();
+                    context.Database.EnsureCreated();
+
                 }
                 catch (Exception ex)
                 {

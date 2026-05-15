@@ -43,7 +43,7 @@ namespace EventoPS.Service
                     SeatId = request.SeatId,
                     Status = "Pending",
                     ReservedAt = DateTime.UtcNow,
-                    ExpiresAt = DateTime.UtcNow.AddMinutes(10)
+                    ExpiresAt = DateTime.UtcNow.AddMinutes(5)
                 };
 
                 _context.Reservations.Add(reservation);
