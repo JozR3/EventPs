@@ -166,7 +166,7 @@ function clearMessages() {
 // FUNCIONES DE EVENTOS Y ASIENTOS
 // ============================================
 
-async function loadEvents() {
+async function cargarEventos() {
     const contenedor = document.getElementById("contenedor");
 
     contenedor.innerHTML = `
@@ -192,7 +192,7 @@ async function loadEvents() {
     }
 }
 
-function showEvents(eventos) {
+function mostrarEventos(eventos) {
     const contenedor = document.getElementById("contenedor");
 
     let html = '<div class="events-grid">';
@@ -235,7 +235,7 @@ function showEvents(eventos) {
     contenedor.innerHTML = html;
 }
 
-async function seeEvento(eventId) {
+async function verEvento(eventId) {
     const contenedor = document.getElementById("contenedor");
 
     contenedor.innerHTML = `
@@ -263,7 +263,7 @@ async function seeEvento(eventId) {
     }
 }
 
-function showSeats(sectores, eventId) {
+function mostrarAsientos(sectores, eventId) {
     const contenedor = document.getElementById("contenedor");
 
     sectorPrices = {};
@@ -379,7 +379,7 @@ function updateSelectedInfo() {
     }
 }
 
-async function reservedSelected(eventId) {
+async function reservarSeleccionados(eventId) {
     if (selectedSeats.length === 0) {
         showToast("Selecciona al menos un asiento");
         return;
@@ -554,7 +554,7 @@ function openPaymentModal() {
     modal.classList.add('active');
     startPaymentTimer();
 }
-function showToast(mensaje) {
+function mostrarToast(mensaje) {
     const toast = document.getElementById("toastNotification");
     if (toast) {
         toast.textContent = mensaje;
