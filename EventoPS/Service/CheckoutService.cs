@@ -65,7 +65,6 @@ namespace EventoPS.Service
             }
             catch (DbUpdateException)
             {
-                // Log si deseas; por ahora devolvemos false para que el controlador informe error
                 try { await transaction.RollbackAsync(); } catch { }
                 return false;
             }

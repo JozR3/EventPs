@@ -22,9 +22,27 @@ namespace EventoPS.Controllers
             var result = await _reservationService.CreateReservationAsync(request);
 
             if (!result)
-                return BadRequest("No se pudo reservar el asiento");
+                return Conflict(new
+                {
+                    message = "Seat already reserved"
+                });
 
-            return Ok("Reserva creada correctamente");
+            return Created("", "Reserva creada correctamente");
+        }
+
+        [HttpPost("cancel")]
+        public async Task<IActionResult> Cancel([FromBody] CancelReservationDto request)
+        {
+            if (request == null)
+                return BadRequest(new { message = "Request inválido" });
+
+            var result = await _reservationService.CancelReservationAsync(request);
+
+            if (!result)
+                return BadRequest(new { message = "No se pudo cancelar la reserva" });
+
+            return Ok(new { message = "Reserva cancelada y asiento liberado" });
         }
     }
+
 }

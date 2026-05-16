@@ -18,7 +18,7 @@ namespace EventoPS.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(5)); // Frequency
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(5)); 
 
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {

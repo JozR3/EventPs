@@ -17,12 +17,14 @@ namespace EventoPS.Service
 
         public async Task<List<SectorSeatsDto>> GetSeatsByEventAsync(int eventId)
         {
-            return await _context.Sectors  ///MAPEO
+            return await _context.Sectors  
                 .Where(s => s.EventId == eventId)
                 .Select(s => new SectorSeatsDto
                 {
                     SectorId = s.Id,
                     SectorName = s.Name,
+                    Price = s.Price,
+
 
                     Seats = s.Seats.Select(seat => new SeatDto
                     {

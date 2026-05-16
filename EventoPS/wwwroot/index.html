@@ -3,39 +3,815 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Eventos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventoPS - Reserva de Entradas</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: #111;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /*  Header con logo y título */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            header h1 {
+                color: #e74c3c;
+                font-size: 28px;
+                font-weight: 700;
+            }
+
+            header p {
+                color: #7f8c8d;
+                font-size: 14px;
+            }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: #e74c3c;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            font-family: Arial;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-text h1 {
+            margin: 0;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-info {
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .btn-logout:hover {
+                background: #c0392b;
+            }
+
+        /*  Modal de Login/Registro */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .modal.active {
+                display: flex;
+            }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 90%;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+            .modal-header h2 {
+                color: #e74c3c;
+                font-size: 24px;
+            }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+            .form-group label {
+                display: block;
+                color: #2c3e50;
+                font-weight: 600;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+
+            .form-group input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #ecf0f1;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+            }
+
+                .form-group input:focus {
+                    outline: none;
+                    border-color: #e74c3c;
+                    box-shadow: 0 0 10px rgba(231, 76, 60, 0.2);
+                }
+
+        .form-button {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+            .form-button:hover {
+                transform: scale(1.02);
+                box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+            }
+
+        .toggle-form {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+            .toggle-form button {
+                background: none;
+                border: none;
+                color: #e74c3c;
+                cursor: pointer;
+                font-weight: 700;
+                text-decoration: underline;
+            }
+
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
             text-align: center;
         }
 
-        .btn {
-            padding: 15px 30px;
-            background: red;
-            border: none;
+        .success-message {
+            background: #27ae60;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /*  Grid de eventos (estilo cartelera) */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /*  Tarjeta de evento (poster) */
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .event-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            }
+
+        .event-poster {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
             font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .event-poster::before {
+                content: '🎬';
+                font-size: 60px;
+                position: absolute;
+                opacity: 0.3;
+            }
+
+        .event-info {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .event-date {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+        }
+
+        .event-venue {
+            font-size: 12px;
+            color: #95a5a6;
+            margin-bottom: 12px;
+        }
+
+        .event-rating {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+            .event-rating span {
+                font-weight: bold;
+            }
+
+        .event-sectors {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+        }
+
+        .event-button {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: auto;
+        }
+
+            .event-button:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+            }
+
+            .event-button:active {
+                transform: scale(0.98);
+            }
+
+        /*  Vista de asientos */
+        .seats-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button {
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+            .back-button:hover {
+                background: #bdc3c7;
+            }
+
+        .sector-title {
+            color: #e74c3c;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .sector-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .sector-price {
+            color: #27ae60;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .sector-available {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .seats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+            gap: 8px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
             border-radius: 10px;
         }
+
+        .seat {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+            .seat.available {
+                background: #95a5a6;
+                color: white;
+                cursor: pointer;
+            }
+
+                .seat.available:hover {
+                    background: #7f8c8d;
+                    transform: scale(1.1);
+                    box-shadow: 0 4px 12px rgba(127, 140, 141, 0.4);
+                }
+
+            .seat.reserved {
+                background: #f39c12;
+                color: white;
+                cursor: not-allowed;
+                opacity: 0.7;
+            }
+
+            .seat.sold {
+                background: #e74c3c;
+                color: white;
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
+
+            .seat.selected {
+                background: #27ae60;
+                color: white;
+                border-color: #fff;
+                box-shadow: 0 0 12px rgba(39, 174, 96, 0.5);
+                transform: scale(1.15);
+            }
+
+        .selected-info {
+            background: #ecf0f1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        #selectedCount {
+            font-size: 14px;
+        }
+
+        #selectedTotal {
+            font-size: 18px;
+            color: #27ae60;
+        }
+
+        .payment-modal {
+            max-width: 500px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .payment-header {
+            background: linear-gradient(135deg,#e74c3c 0%,#c0392b 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payment-body {
+            padding: 25px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .payment-section h3 {
+            color: #e74c3c;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .payment-seats-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .payment-seat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 13px;
+            color: #2c3e50;
+        }
+
+            .payment-seat-item:last-child {
+                border-bottom: none;
+            }
+
+        .payment-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+            .payment-detail-row.payment-total {
+                border-bottom: none;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                font-size: 16px;
+                border-top: 2px solid #ecf0f1;
+            }
+
+        .payment-timer {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            color: #856404;
+            font-weight: 600;
+        }
+
+        .payment-user {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #e74c3c;
+        }
+
+            .payment-user strong {
+                display: block;
+                color: #2c3e50;
+                margin-bottom: 4px;
+            }
+
+            .payment-user small {
+                color: #7f8c8d;
+            }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: all .3s ease;
+        }
+
+            .btn-secondary:hover {
+                background: #7f8c8d;
+            }
+
+        .seat-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #2c3e50;
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        /* Botón principal */
+        .btn-primary {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+            .btn-primary:hover {
+                transform: scale(1.02);
+                box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+            }
+
+            .btn-primary:active {
+                transform: scale(0.98);
+            }
+
+            .btn-primary:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+        /* Animación de carga */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 18px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+
+            .seats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+            }
+
+            .seat-legend {
+                gap: 15px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+        .toast-container {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #e74c3c; 
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+            .toast-container.show {
+                visibility: visible;
+                opacity: 1;
+                bottom: 50px;
+            }
     </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-left">
+                <div class="logo">🎬</div>
+                <div class="header-text">
+                    <h1>EventoPS</h1>
+                    <p>Tu plataforma de entradas</p>
+                </div>
+            </div>
+            <div class="header-right" id="headerRight">
+                <button class="btn-logout" onclick="openLoginModal()">Iniciar Sesión</button>
+            </div>
+        </header>
 
-    <h1>Bienvenido 🎬</h1>
-    <button class="btn" onclick="cargarEventos(false)">
-        Ingresar a las funciones
-    </button>
+        <!-- Contenedor principal -->
+        <div id="contenedor"></div>
+    </div>
 
-    <button class="btn" onclick="cargarEventos(true)">
-        Comprar asiento
-    </button>
+    <!-- Modal de Pago -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content payment-modal">
+            <div id="paymentContent"></div>
+        </div>
+    </div>
 
-    <div id="contenedor"></div>
+    <!-- Modal de Login/Registro -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Iniciar Sesión</h2>
+                <button class="close-modal" onclick="closeAuthModal()">×</button>
+            </div>
 
+            <div id="messageContainer"></div>
+
+            <!-- Formulario de Login -->
+            <div id="loginForm" class="auth-form">
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="tu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="loginPassword" placeholder="Tu contraseña" required>
+                    </div>
+                    <button type="submit" class="form-button">Iniciar Sesión</button>
+                </form>
+                <div class="toggle-form">
+                    ¿No tienes cuenta? <button type="button" onclick="toggleToRegister()">Regístrate</button>
+                </div>
+            </div>
+
+            <!-- Formulario de Registro -->
+            <div id="registerForm" class="auth-form" style="display: none;">
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="registerName" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" placeholder="tu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="registerPassword" placeholder="Al menos 6 caracteres" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Contraseña</label>
+                        <input type="password" id="registerConfirmPassword" placeholder="Confirma tu contraseña" required>
+                    </div>
+                    <button type="submit" class="form-button">Registrarse</button>
+                </form>
+                <div class="toggle-form">
+                    ¿Ya tienes cuenta? <button type="button" onclick="toggleToLogin()">Inicia Sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toastNotification" class="toast-container"></div>
     <script src="app.js"></script>
 </body>
 </html>

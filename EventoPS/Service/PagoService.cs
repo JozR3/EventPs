@@ -30,7 +30,6 @@ namespace EventoPS.Service
                     await transaction.RollbackAsync();
                     return false;
                 }
-                // Otro fetch para asegurar que el asiento no cambió de estado entre la primera consulta y ahora.
                 var seat = await _context.Seats.FindAsync(request.SeatId);
                 if (seat == null || seat.Status != "Reserved")
                 {

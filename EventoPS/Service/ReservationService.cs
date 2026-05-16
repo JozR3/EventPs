@@ -110,7 +110,7 @@ namespace EventoPS.Service
                     SeatId = request.SeatId,
                     Status = "Pending",
                     ReservedAt = DateTime.UtcNow,
-                    ExpiresAt = DateTime.UtcNow.AddMinutes(2)
+                    ExpiresAt = DateTime.UtcNow.AddMinutes(5)
                 };
 
                 seat.Status = "Reserved";
@@ -170,7 +170,6 @@ namespace EventoPS.Service
                 if (reservation == null)
                     return false;
 
-                // marcar como expirado/cancelado
                 reservation.Status = "Expired";
                 _context.Reservations.Update(reservation);
 
