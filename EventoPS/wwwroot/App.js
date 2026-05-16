@@ -213,7 +213,7 @@ function mostrarEventos(eventos) {
         const disponibles = e.sectors.reduce((sum, s) => sum + s.availableSeats, 0);
 
         html += `
-            <div class="event-card" onclick="verEvento(${e.id})">
+            <div class="event-card" onclick="seeEvento(${e.id})">
                 <div class="event-poster">
                     🎬 ${e.name}
                 </div>
@@ -318,7 +318,7 @@ function mostrarAsientos(sectores, eventId) {
             <div class="legend-item"><div class="legend-box" style="background: #27ae60;"></div>Seleccionado</div>
         </div>
 
-        <button id="btn-reserve" class="btn-primary" onclick="reservedSelectect(${eventId})" disabled>
+        <button id="btn-reserve" class="btn-primary" onclick="reservedSelected(${eventId})" disabled>
             Reservar Seleccionados (${selectedSeats.length})
         </button>
         </div>
