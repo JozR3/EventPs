@@ -213,7 +213,7 @@ function showEvents(eventos) {
         const disponibles = e.sectors.reduce((sum, s) => sum + s.availableSeats, 0);
 
         html += `
-            <div class="event-card" onclick="seeEvent(${e.id})">
+            <div class="event-card" onclick="seeEvento(${e.id})">
                 <div class="event-poster">
                     🎬 ${e.name}
                 </div>
