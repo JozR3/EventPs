@@ -57,7 +57,7 @@ Con la ejecucion del programa ya se realiza la migracion automaticamente con el 
 ---
 
 ## ▶️ Ejecución 
-Para la ejecucion del programa se debe tener en cuenta que el perfil de lanzamiento de Visual Studio sea "http" para que el front end se vea correctamente.
+Para la ejecucion del programa se debe tener en cuenta que el perfil de lanzamiento de Visual Studio sea "https" para que el front end se vea correctamente.
 
 <img width="727" height="543" alt="image" src="https://github.com/user-attachments/assets/3d4f4ba4-3cc0-4013-92cc-2ee3ac98713d" />
 
