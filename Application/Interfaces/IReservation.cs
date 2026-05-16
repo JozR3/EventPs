@@ -10,5 +10,7 @@ namespace Application.Interfaces
     public interface IReservation
     {
         Task<bool> CreateReservationAsync(CreateReservationDto request);
+        Task<bool> CancelReservationAsync(CancelReservationDto request);
+
     }
 }

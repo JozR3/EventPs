@@ -15,5 +15,6 @@ namespace Domain.Entities
         public string Status { get; set; } // Active, Cancelled
 
         public ICollection<Sector> Sectors { get; set; }
+        
     }
 }

@@ -13,15 +13,6 @@ namespace EventoPS.Controllers
         {
             _reservedSeatService = reservedSeatService;
         }
-        /*
-        [HttpGet]
-        public async Task<IActionResult> GetReservedSeats()
-        {
-            var result = await _reservedSeatService.GetReservedSeatsAsync();
-            return Ok(result); 
-
-        }
-        */
         [HttpGet]
         public async Task<IActionResult> GetReservedSeats(int eventId)
         {

@@ -37,6 +37,8 @@ namespace EventoPS
             builder.Services.AddScoped<IReservedSeatService, ReservedSeatService>();
             builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 
+            builder.Services.AddScoped<IAuthService, AuthService>();
+
             // Endpoint Pagos.
             builder.Services.AddScoped<IPagoService, PagoService>();
             // Tarea cronometrada.
@@ -55,10 +57,8 @@ namespace EventoPS
                     //context.Database.EnsureDeleted();
                     //context.Database.EnsureCreated();
                     //context.Database.Migrate();
-
                     context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
-
                 }
                 catch (Exception ex)
                 {

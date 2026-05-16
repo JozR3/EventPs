@@ -5,7 +5,7 @@ namespace EventoPS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventsController : ControllerBase ////Listado de eventos
+    public class EventsController : ControllerBase 
     {
         private readonly IEventService _service;
         public EventsController(IEventService service)
